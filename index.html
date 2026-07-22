@@ -135,12 +135,12 @@
 </head>
 <body class="min-h-screen text-textMain flex justify-center items-start relative selection:bg-brandYellow selection:text-black">
 
-  <!-- Ambient Backdrop Glows (Visible on Desktop) -->
-  <div class="hidden md:block absolute top-1/4 left-1/3 w-[450px] h-[450px] bg-brandYellow/5 rounded-full blur-[100px] pointer-events-none blob-animate"></div>
-  <div class="hidden md:block absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-brandYellow/3 rounded-full blur-[100px] pointer-events-none blob-animate" style="animation-delay: -4s;"></div>
+  <!-- Ambient Backdrop Glows (Visible on all viewports) -->
+  <div class="absolute top-12 left-4 w-72 h-72 bg-brandYellow/10 rounded-full blur-[80px] pointer-events-none blob-animate z-0"></div>
+  <div class="absolute bottom-24 right-4 w-72 h-72 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none blob-animate z-0" style="animation-delay: -4s;"></div>
 
-  <!-- Responsive Digital Card Container -->
-  <div class="w-full max-w-md min-h-screen bg-transparent flex flex-col justify-start relative z-10 md:shadow-[0_20px_60px_rgba(0,0,0,0.1)] md:my-6 md:rounded-[40px] overflow-hidden">
+  <!-- Responsive Digital Card Container (Floating card with shadow on all devices) -->
+  <div class="w-[92%] max-w-md mx-auto my-6 bg-transparent flex flex-col justify-start relative z-10 shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-borderGray rounded-[32px] overflow-hidden">
     
     <!-- Ambient Glassmorphism Background Blobs (Visible on mobile & desktop) -->
     <div class="absolute top-[15%] -left-24 w-64 h-64 bg-amber-400/20 rounded-full blur-[60px] pointer-events-none z-0 blob-animate"></div>
