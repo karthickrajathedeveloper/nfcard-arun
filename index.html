@@ -86,7 +86,8 @@
       --hover-active-border: rgba(244, 63, 94, 0.4);
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       overflow-x: hidden;
       margin: 0;
@@ -348,8 +349,8 @@
 
       <!-- Avatar Logo (Enlarged and fixed) -->
       <div
-        class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-black p-2 flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300">
-        <img src="logo.png" alt="Empty Pockets Logo" class="w-full h-full object-contain">
+        class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-white p-0 flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300">
+        <img src="logo.png" alt="Empty Pockets Logo" class="w-full h-full object-contain scale-[2.05]">
       </div>
 
       <!-- Spacer -->
@@ -365,7 +366,7 @@
       <p class="text-xs font-display text-textMuted font-semibold mb-3.5">
         Advertisement &amp; Branding Agency
       </p>
-      <p class="text-[11px] text-textSub font-light leading-relaxed max-w-[240px] font-sans">
+      <p class="text-[13px] text-textMuted font-medium leading-relaxed max-w-[270px] font-sans">
         23/83, Ram Nagar 5th street, SS Colony, Bypass Road, Madurai.
       </p>
 
@@ -460,8 +461,8 @@
             </svg>
           </div>
           <div class="ml-4 text-left font-sans flex flex-col justify-center">
-            <span class="block text-sm font-bold text-textMain leading-none">Instagram</span>
-            <span class="block text-[10px] text-textSub font-light mt-1">emptypocketproductionhouse</span>
+            <span class="block text-[15px] font-bold text-textMain leading-none">Instagram</span>
+            <span class="block text-xs text-textSub font-normal mt-1.5">emptypocketproductionhouse</span>
           </div>
         </div>
 
@@ -479,8 +480,8 @@
             </svg>
           </div>
           <div class="ml-4 text-left font-sans flex flex-col justify-center">
-            <span class="block text-sm font-bold text-textMain leading-none">Youtube</span>
-            <span class="block text-[10px] text-textSub font-light mt-1">emptypocketproductionhouse</span>
+            <span class="block text-[15px] font-bold text-textMain leading-none">Youtube</span>
+            <span class="block text-xs text-textSub font-normal mt-1.5">emptypocketproductionhouse</span>
           </div>
         </div>
 
@@ -498,8 +499,8 @@
             </svg>
           </div>
           <div class="ml-4 text-left font-sans">
-            <span class="block text-sm font-bold text-textMain leading-snug">Phone</span>
-            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">8754667546</span>
+            <span class="block text-[15px] font-bold text-textMain leading-none">Phone</span>
+            <span class="block text-xs text-textSub font-normal mt-1.5">8754667546</span>
           </div>
         </div>
 
@@ -516,8 +517,8 @@
             </svg>
           </div>
           <div class="ml-4 text-left font-sans">
-            <span class="block text-sm font-bold text-textMain leading-snug">Whatsapp</span>
-            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">918754667546</span>
+            <span class="block text-[15px] font-bold text-textMain leading-none">Whatsapp</span>
+            <span class="block text-xs text-textSub font-normal mt-1.5">918754667546</span>
           </div>
         </div>
 
@@ -535,9 +536,8 @@
             </svg>
           </div>
           <div class="ml-4 text-left font-sans">
-            <span class="block text-sm font-bold text-textMain leading-snug">Facebook</span>
-            <span
-              class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">emptypocketproductionhouse</span>
+            <span class="block text-[15px] font-bold text-textMain leading-none">Facebook</span>
+            <span class="block text-xs text-textSub font-normal mt-1.5">emptypocketproductionhouse</span>
           </div>
         </div>
 
@@ -556,9 +556,9 @@
             </svg>
           </div>
           <div class="ml-4 text-left font-sans">
-            <span class="block text-sm font-bold text-textMain leading-snug">Email</span>
+            <span class="block text-[15px] font-bold text-textMain leading-none">Email</span>
             <span
-              class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">emptypocketproductionhouse@gmail.com</span>
+              class="block text-xs text-textSub font-normal truncate max-w-[185px] mt-1.5">emptypocketproductionhouse@gmail.com</span>
           </div>
         </div>
 
@@ -613,9 +613,12 @@
         'TEL;TYPE=CELL,VOICE:+918754667546',
         'EMAIL;TYPE=PREF,INTERNET:emptypocketproductionhouse@gmail.com',
         'ADR;TYPE=WORK:;;23/83, Ram Nagar 5th street, SS Colony, Bypass Road;Madurai;Tamil Nadu;625016;India',
-        'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/emptypocketproductionhouse/',
-        'X-SOCIALPROFILE;TYPE=youtube:http://youtube.com/@EmptyPocketsProduction',
-        'X-SOCIALPROFILE;TYPE=facebook:https://www.facebook.com/emptypocketproductionhouse',
+        'X-SOCIALPROFILE;type=instagram;x-user=emptypocketproductionhouse:https://instagram.com/emptypocketproductionhouse/',
+        'X-SOCIALPROFILE;type=youtube;x-user=EmptyPocketsProduction:http://youtube.com/@EmptyPocketsProduction',
+        'X-SOCIALPROFILE;type=facebook;x-user=emptypocketproductionhouse:https://www.facebook.com/emptypocketproductionhouse',
+        'URL;type=Instagram:https://www.instagram.com/emptypocketproductionhouse/',
+        'URL;type=YouTube:http://youtube.com/@EmptyPocketsProduction',
+        'URL;type=Facebook:https://www.facebook.com/emptypocketproductionhouse',
         'REV:' + new Date().toISOString(),
         'END:VCARD'
       ].join('\r\n')
