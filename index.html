@@ -272,6 +272,9 @@
             <div class="w-full h-full shrink-0">
               <img src="product4.jpg" alt="Creatives" class="w-full h-full object-cover">
             </div>
+            <div class="w-full h-full shrink-0">
+              <img src="product5.jpg" alt="Digital Marketing" class="w-full h-full object-cover">
+            </div>
           </div>
 
           <!-- Left arrow -->
@@ -292,12 +295,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
           </button>
 
-          <!-- Dot indicators overlay -->
+          <!-- Dot indicators overlay (all w-2 circles) -->
           <div class="absolute bottom-4 inset-x-0 flex justify-center gap-2 z-20">
-            <button onclick="goToSlide(0)" class="slide-dot h-2 w-5 bg-brandYellow rounded-full transition-all duration-300" aria-label="Slide 1"></button>
+            <button onclick="goToSlide(0)" class="slide-dot h-2 w-2 bg-brandYellow rounded-full transition-all duration-300" aria-label="Slide 1"></button>
             <button onclick="goToSlide(1)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 2"></button>
             <button onclick="goToSlide(2)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 3"></button>
             <button onclick="goToSlide(3)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 4"></button>
+            <button onclick="goToSlide(4)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 5"></button>
           </div>
         </div>
       </div>
@@ -490,7 +494,7 @@
 
     // Products Slideshow Logic
     let currentSlide = 0;
-    const totalSlides = 4;
+    const totalSlides = 5;
     let slideInterval;
 
     function startSlideShow() {
@@ -525,11 +529,11 @@
       
       dots.forEach((dot, idx) => {
         if (idx === currentSlide) {
-          dot.classList.remove('w-2', 'bg-white/40');
-          dot.classList.add('w-5', 'bg-brandYellow');
+          dot.classList.remove('bg-white/40');
+          dot.classList.add('bg-brandYellow');
         } else {
-          dot.classList.remove('w-5', 'bg-brandYellow');
-          dot.classList.add('w-2', 'bg-white/40');
+          dot.classList.remove('bg-brandYellow');
+          dot.classList.add('bg-white/40');
         }
       });
     }
