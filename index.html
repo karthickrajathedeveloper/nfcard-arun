@@ -13,7 +13,6 @@
         extend: {
           colors: {
             darkBg: 'var(--bg-color)',
-            darkBgEnd: 'var(--bg-color-end)',
             cardBg: 'var(--card-bg)',
             brandYellow: '#FFC107',
             brandYellowGlow: 'var(--glow-color)',
@@ -56,9 +55,6 @@
       --btn-secondary-border: rgba(0, 0, 0, 0.06);
       --btn-secondary-hover: rgba(0, 0, 0, 0.04);
       --glow-color: rgba(76, 130, 246, 0.15);
-      --phone-border: #E5E5E7;
-      --phone-bg: #EBF2FC;
-      --body-outer-bg: #EAEAEA;
     }
 
     body.theme-dark {
@@ -73,16 +69,13 @@
       --btn-secondary-border: rgba(255, 255, 255, 0.08);
       --btn-secondary-hover: rgba(255, 255, 255, 0.05);
       --glow-color: rgba(255, 193, 7, 0.2);
-      --phone-border: #222222;
-      --phone-bg: #111112;
-      --body-outer-bg: #090909;
     }
 
     body {
-      background-color: var(--body-outer-bg);
+      background: linear-gradient(to bottom, var(--bg-color), var(--bg-color-end));
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease;
     }
     
     h1, h2, h3, h4 {
@@ -102,15 +95,6 @@
     .glass-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.08);
-    }
-
-    /* Hide default scrollbars for simulated app feel */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
     }
 
     /* Marquee animation configurations */
@@ -133,7 +117,7 @@
       animation: marquee-right 30s linear infinite;
     }
 
-    /* Floating keyframe for desktop lights */
+    /* Floating keyframe for background lights */
     @keyframes float-blob {
       0% { transform: translate(0px, 0px) scale(1); }
       50% { transform: translate(30px, -40px) scale(1.06); }
@@ -144,292 +128,249 @@
       animation: float-blob 12s infinite alternate ease-in-out;
     }
 
-    @media (min-width: 768px) {
-      .phone-frame {
-        border: 12px solid var(--phone-border);
-        border-radius: 48px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 
-                    0 0 0 2px rgba(255, 255, 255, 0.05);
-        width: 385px;
-        height: 800px;
-        position: relative;
-        background: var(--phone-bg);
-        transition: border-color 0.3s ease, background-color 0.3s ease;
-      }
+    .btn-glow:hover {
+      box-shadow: 0 0 25px rgba(255, 193, 7, 0.4);
     }
   </style>
 </head>
-<body class="min-h-screen text-textMain flex items-center justify-center p-0 md:p-8 relative overflow-hidden selection:bg-brandYellow selection:text-black">
+<body class="min-h-screen text-textMain flex justify-center items-start relative selection:bg-brandYellow selection:text-black">
 
   <!-- Ambient Backdrop Glows (Visible on Desktop) -->
   <div class="hidden md:block absolute top-1/4 left-1/3 w-[450px] h-[450px] bg-brandYellow/5 rounded-full blur-[100px] pointer-events-none blob-animate"></div>
   <div class="hidden md:block absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-brandYellow/3 rounded-full blur-[100px] pointer-events-none blob-animate" style="animation-delay: -4s;"></div>
 
-  <!-- Floating Theme Selector Toggle (Fixed at top-right of screen) -->
-  <div class="fixed top-6 right-6 z-40">
-    <button 
-      id="theme-toggle-btn"
-      onclick="toggleTheme()" 
-      class="p-3 bg-white/80 border border-black/5 hover:border-brandYellow text-black rounded-2xl shadow-xl backdrop-blur-md transition-all duration-300 active:scale-90 flex items-center justify-center"
-      aria-label="Toggle Theme"
-    >
-      <!-- Sun Icon (Active when dark theme, toggles to light) -->
-      <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      <!-- Moon Icon (Active when light theme, toggles to dark) -->
-      <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-    </button>
-  </div>
-
-  <!-- Mobile phone shell frame mockup -->
-  <div class="phone-frame w-full min-h-screen md:min-h-0 overflow-hidden flex flex-col z-10">
+  <!-- Responsive Digital Card Container -->
+  <div class="w-full max-w-md min-h-screen bg-transparent flex flex-col justify-start relative z-10 md:shadow-[0_20px_60px_rgba(0,0,0,0.1)] md:my-6 md:rounded-[40px] overflow-hidden">
     
-    <!-- Phone Mockup Header Indicators (Visible on Desktop) -->
-    <div class="hidden md:block absolute top-0 inset-x-0 h-10 z-30 pointer-events-none bg-black">
-      <!-- Dynamic Island notch camera -->
-      <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-28 h-6 bg-black rounded-full flex items-center justify-between px-3">
-        <div class="w-3.5 h-3.5 rounded-full bg-[#111111] border border-white/5 flex items-center justify-center">
-          <div class="w-1.5 h-1.5 rounded-full bg-blue-900/50"></div>
-        </div>
-        <div class="w-2 h-2 rounded-full bg-[#0a0a0a]"></div>
-      </div>
+    <!-- ================= 1. HEADER MARQUEE SECTION ================= -->
+    <div class="h-60 bg-black flex flex-col justify-center space-y-3.5 overflow-hidden relative z-0 shrink-0">
+      <!-- Ambient subtle overlay mask -->
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none"></div>
 
-      <!-- Left: Clock (Static white to show over black header) -->
-      <div id="live-time" class="absolute left-6 top-3 text-[11px] font-semibold text-white/80 tracking-wide">10:00</div>
-
-      <!-- Right: Status signals -->
-      <div class="absolute right-6 top-3 flex items-center gap-1.5 text-white/80">
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-1.2 0-2.4.4-3.4 1.2L2 9.7V21h20V9.7L15.4 4.2c-1-.8-2.2-1.2-3.4-1.2z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi"><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><path d="M12 18.5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1Z"/></svg>
-        <div class="w-5 h-2.5 border border-white/40 rounded-[3px] p-[1px] flex items-center">
-          <div class="h-full w-4/5 bg-white rounded-[1px]"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phone Card Contents Scrollable Area -->
-    <div class="w-full h-full overflow-y-auto no-scrollbar bg-gradient-to-b from-darkBg to-darkBgEnd text-textMain transition-colors duration-300 flex flex-col justify-start">
-      
-      <!-- ================= 1. HEADER MARQUEE SECTION ================= -->
-      <div class="h-64 bg-black flex flex-col justify-center space-y-3.5 overflow-hidden relative z-0 shrink-0 pt-6">
-        <!-- Ambient subtle overlay mask -->
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none"></div>
-
-        <!-- Marquee Row 1 (slides left) -->
-        <div class="w-full overflow-hidden whitespace-nowrap">
-          <div class="marquee-row-left gap-3.5 pr-3.5">
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">DOCUMENTARY VIDEOS</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">PRODUCT VIDEOS</span>
-            <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">VIDEO PRODUCTION</span>
-            <!-- Seamless double loop -->
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">DOCUMENTARY VIDEOS</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">PRODUCT VIDEOS</span>
-            <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">VIDEO PRODUCTION</span>
-          </div>
-        </div>
-
-        <!-- Marquee Row 2 (slides right) -->
-        <div class="w-full overflow-hidden whitespace-nowrap">
-          <div class="marquee-row-right gap-3.5 pr-3.5">
-            <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black font-display text-[10px] font-bold uppercase tracking-wider">BRAND DESIGN</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">CORPORATE IDENTITY</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">STATIONERY DESIGNS</span>
-            <!-- Seamless double loop -->
-            <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black font-display text-[10px] font-bold uppercase tracking-wider">BRAND DESIGN</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">CORPORATE IDENTITY</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">STATIONERY DESIGNS</span>
-          </div>
-        </div>
-
-        <!-- Marquee Row 3 (slides left) -->
-        <div class="w-full overflow-hidden whitespace-nowrap">
-          <div class="marquee-row-left gap-3.5 pr-3.5">
-            <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">BROADCAST AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">THEATRE AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">RADIO AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">TELEVISION AD</span>
-            <!-- Seamless double loop -->
-            <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">BROADCAST AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">THEATRE AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">RADIO AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">TELEVISION AD</span>
-          </div>
-        </div>
-
-        <!-- Marquee Row 4 (slides right) -->
-        <div class="w-full overflow-hidden whitespace-nowrap">
-          <div class="marquee-row-right gap-3.5 pr-3.5">
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA SET UP</span>
-            <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">POST DESIGN</span>
-            <!-- Seamless double loop -->
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA SET UP</span>
-            <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA AD</span>
-            <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">POST DESIGN</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= 2. PROFILE DETAILS CARD ================= -->
-      <div class="relative -mt-16 mx-4 glass-card rounded-[32px] p-6 text-center z-20 flex flex-col items-center border shadow-2xl mb-8">
-        
-        <!-- Avatar Logo -->
-        <div class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-black p-3.5 flex items-center justify-center shadow-lg transition-colors duration-300">
-          <img src="logo.png" alt="Empty Pockets Logo" class="max-w-full max-h-full object-contain">
-        </div>
-
-        <!-- Card Spacer to push down texts -->
-        <div class="h-12 w-full"></div>
-
-        <!-- Arun Craig Profile texts -->
-        <h2 class="text-2xl font-bold font-display text-textMain tracking-tight leading-none mb-1">
-          Arun Craig
-        </h2>
-        <p class="text-xs uppercase tracking-widest text-textMuted font-semibold mb-2">
-          EMPTYPOCKETSPRODUCTION
-        </p>
-        <p class="text-xs font-display text-textMuted font-semibold mb-3.5">
-          Advertisement &amp; Branding Agency
-        </p>
-        <p class="text-[11px] text-textSub font-light leading-relaxed max-w-[240px] font-sans">
-          23/83, Ram Nagar 5th street, SS Colony, Bypass Road, Madurai.
-        </p>
-
-        <!-- Save contact blue capsule button -->
+      <!-- Floating Theme Selector Toggle inside Header -->
+      <div class="absolute top-4 right-4 z-30">
         <button 
-          onclick="downloadVCF()" 
-          class="mt-6 px-10 py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-display font-bold text-xs tracking-wider uppercase rounded-full shadow-[0_6px_20px_rgba(59,130,246,0.35)] active:scale-95 transition-transform"
+          id="theme-toggle-btn"
+          onclick="toggleTheme()" 
+          class="p-2.5 bg-black/40 border border-white/10 hover:border-brandYellow text-white rounded-xl shadow-lg backdrop-blur-md transition-all duration-300 active:scale-90 flex items-center justify-center"
+          aria-label="Toggle Theme"
         >
-          Save contact
+          <!-- Sun Icon (Active in dark theme) -->
+          <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <!-- Moon Icon (Active in light theme) -->
+          <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
       </div>
 
-      <!-- ================= 3. SOCIAL CONTACT CARDS ================= -->
-      <div class="space-y-4 px-4 pb-6">
-        
-        <!-- Instagram Card -->
-        <a 
-          href="https://www.instagram.com/emptypocketproductionhouse/" 
-          target="_blank"
-          class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
-        >
-          <div class="flex items-center">
-            <!-- Instagram Native gradient logo mock -->
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-3.5 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-            </div>
-            <div class="ml-4 text-left font-sans">
-              <span class="block text-sm font-bold text-textMain leading-snug">Instagram</span>
-              <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">emptypocketsproduction?igsh=dG53bW83azRkc3Rs</span>
-            </div>
-          </div>
-          <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-
-        <!-- Youtube Card -->
-        <a 
-          href="http://youtube.com/@EmptyPocketsProduction" 
-          target="_blank"
-          class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
-        >
-          <div class="flex items-center">
-            <!-- Youtube Red Rounded Square Logo -->
-            <div class="w-14 h-14 rounded-2xl bg-[#FF0000] p-3.5 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-white w-full h-full"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </div>
-            <div class="ml-4 text-left font-sans">
-              <span class="block text-sm font-bold text-textMain leading-snug">Youtube</span>
-              <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">https://youtube.com/@EmptyPockets...si=pYGQodHesRNlaBOk</span>
-            </div>
-          </div>
-          <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-
-        <!-- Phone Card -->
-        <a 
-          href="tel:+918754667546" 
-          class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
-        >
-          <div class="flex items-center">
-            <!-- Phone iOS Green Rounded Square Logo -->
-            <div class="w-14 h-14 rounded-2xl bg-[#4CD964] p-3.5 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            </div>
-            <div class="ml-4 text-left font-sans">
-              <span class="block text-sm font-bold text-textMain leading-snug">Phone</span>
-              <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">8754667546</span>
-            </div>
-          </div>
-          <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-
-        <!-- Whatsapp Card -->
-        <a 
-          href="https://wa.me/918754667546" 
-          target="_blank"
-          class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
-        >
-          <div class="flex items-center">
-            <!-- Whatsapp Green Rounded Square Logo -->
-            <div class="w-14 h-14 rounded-2xl bg-[#25D366] p-3.5 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div class="ml-4 text-left font-sans">
-              <span class="block text-sm font-bold text-textMain leading-snug">Whatsapp</span>
-              <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">918754667546</span>
-            </div>
-          </div>
-          <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-
-        <!-- Facebook Card -->
-        <a 
-          href="https://www.facebook.com/emptypocketproductionhouse" 
-          target="_blank"
-          class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
-        >
-          <div class="flex items-center">
-            <!-- Facebook Blue Rounded Square Logo -->
-            <div class="w-14 h-14 rounded-2xl bg-[#1877F2] p-3.5 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-white w-full h-full"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </div>
-            <div class="ml-4 text-left font-sans">
-              <span class="block text-sm font-bold text-textMain leading-snug">Facebook</span>
-              <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">https://facebook.com/emptypocketproductionhouse</span>
-            </div>
-          </div>
-          <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-
-        <!-- Email Card -->
-        <a 
-          href="mailto:emptypocketproductionhouse@gmail.com" 
-          class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
-        >
-          <div class="flex items-center">
-            <!-- iOS Mail Blue Gradient Logo Mock -->
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-b from-[#5AC8FA] to-[#007AFF] p-3.5 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </div>
-            <div class="ml-4 text-left font-sans">
-              <span class="block text-sm font-bold text-textMain leading-snug">Email</span>
-              <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">emptypocketproductionhouse@gmail.com</span>
-            </div>
-          </div>
-          <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-
+      <!-- Marquee Row 1 (slides left) -->
+      <div class="w-full overflow-hidden whitespace-nowrap">
+        <div class="marquee-row-left gap-3.5 pr-3.5">
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">DOCUMENTARY VIDEOS</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">PRODUCT VIDEOS</span>
+          <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">VIDEO PRODUCTION</span>
+          <!-- Seamless double loop -->
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">DOCUMENTARY VIDEOS</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">PRODUCT VIDEOS</span>
+          <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">VIDEO PRODUCTION</span>
+        </div>
       </div>
 
-      <!-- Small footer credits text -->
-      <div class="text-center font-sans mt-4 pt-4 pb-8 border-t border-borderGray text-[9px] text-textSub">
-        Designed with ❤️ by Empty Pocket Production House
+      <!-- Marquee Row 2 (slides right) -->
+      <div class="w-full overflow-hidden whitespace-nowrap">
+        <div class="marquee-row-right gap-3.5 pr-3.5">
+          <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black font-display text-[10px] font-bold uppercase tracking-wider">BRAND DESIGN</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">CORPORATE IDENTITY</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">STATIONERY DESIGNS</span>
+          <!-- Seamless double loop -->
+          <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black font-display text-[10px] font-bold uppercase tracking-wider">BRAND DESIGN</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">CORPORATE IDENTITY</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">STATIONERY DESIGNS</span>
+        </div>
       </div>
+
+      <!-- Marquee Row 3 (slides left) -->
+      <div class="w-full overflow-hidden whitespace-nowrap">
+        <div class="marquee-row-left gap-3.5 pr-3.5">
+          <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">BROADCAST AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">THEATRE AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">RADIO AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">TELEVISION AD</span>
+          <!-- Seamless double loop -->
+          <span class="px-4 py-1.5 rounded-full bg-white text-black text-[10px] font-display font-bold uppercase tracking-wider">BROADCAST AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">THEATRE AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">RADIO AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">TELEVISION AD</span>
+        </div>
+      </div>
+
+      <!-- Marquee Row 4 (slides right) -->
+      <div class="w-full overflow-hidden whitespace-nowrap">
+        <div class="marquee-row-right gap-3.5 pr-3.5">
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA SET UP</span>
+          <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">POST DESIGN</span>
+          <!-- Seamless double loop -->
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA SET UP</span>
+          <span class="px-4 py-1.5 rounded-full bg-brandYellow text-black text-[10px] font-display font-bold uppercase tracking-wider">SOCIAL MEDIA AD</span>
+          <span class="px-4 py-1.5 rounded-full border border-white/10 text-white/40 text-[10px] font-display font-bold uppercase tracking-wider">POST DESIGN</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 2. PROFILE DETAILS CARD ================= -->
+    <div class="relative -mt-12 mx-4 glass-card rounded-[32px] p-6 text-center z-20 flex flex-col items-center border shadow-2xl mb-8">
+      
+      <!-- Avatar Logo -->
+      <div class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-black p-3.5 flex items-center justify-center shadow-lg transition-all duration-300">
+        <img src="logo.png" alt="Empty Pockets Logo" class="max-w-full max-h-full object-contain">
+      </div>
+
+      <!-- Spacer -->
+      <div class="h-12 w-full"></div>
+
+      <!-- Profile content -->
+      <h2 class="text-2xl font-bold font-display text-textMain tracking-tight leading-none mb-1">
+        Arun Craig
+      </h2>
+      <p class="text-xs uppercase tracking-widest text-textMuted font-semibold mb-2">
+        EMPTYPOCKETSPRODUCTION
+      </p>
+      <p class="text-xs font-display text-textMuted font-semibold mb-3.5">
+        Advertisement &amp; Branding Agency
+      </p>
+      <p class="text-[11px] text-textSub font-light leading-relaxed max-w-[240px] font-sans">
+        23/83, Ram Nagar 5th street, SS Colony, Bypass Road, Madurai.
+      </p>
+
+      <!-- Save contact button -->
+      <button 
+        onclick="downloadVCF()" 
+        class="mt-6 px-10 py-3.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-display font-bold text-xs tracking-wider uppercase rounded-full shadow-[0_6px_20px_rgba(59,130,246,0.35)] active:scale-95 transition-transform"
+      >
+        Save contact
+      </button>
+    </div>
+
+    <!-- ================= 3. SOCIAL CONTACT CARDS ================= -->
+    <div class="space-y-4 px-4 pb-12">
+      
+      <!-- Instagram Card -->
+      <a 
+        href="https://www.instagram.com/emptypocketproductionhouse/" 
+        target="_blank"
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
+      >
+        <div class="flex items-center">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </div>
+          <div class="ml-4 text-left font-sans">
+            <span class="block text-sm font-bold text-textMain leading-snug">Instagram</span>
+            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">emptypocketsproduction?igsh=dG53bW83azRkc3Rs</span>
+          </div>
+        </div>
+        <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Youtube Card -->
+      <a 
+        href="http://youtube.com/@EmptyPocketsProduction" 
+        target="_blank"
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
+      >
+        <div class="flex items-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#FF0000] p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-white w-full h-full"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </div>
+          <div class="ml-4 text-left font-sans">
+            <span class="block text-sm font-bold text-textMain leading-snug">Youtube</span>
+            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">https://youtube.com/@EmptyPockets...si=pYGQodHesRNlaBOk</span>
+          </div>
+        </div>
+        <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Phone Card -->
+      <a 
+        href="tel:+918754667546" 
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
+      >
+        <div class="flex items-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#4CD964] p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="ml-4 text-left font-sans">
+            <span class="block text-sm font-bold text-textMain leading-snug">Phone</span>
+            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">8754667546</span>
+          </div>
+        </div>
+        <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Whatsapp Card -->
+      <a 
+        href="https://wa.me/918754667546" 
+        target="_blank"
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
+      >
+        <div class="flex items-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#25D366] p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="ml-4 text-left font-sans">
+            <span class="block text-sm font-bold text-textMain leading-snug">Whatsapp</span>
+            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">918754667546</span>
+          </div>
+        </div>
+        <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Facebook Card -->
+      <a 
+        href="https://www.facebook.com/emptypocketproductionhouse" 
+        target="_blank"
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
+      >
+        <div class="flex items-center">
+          <div class="w-14 h-14 rounded-2xl bg-[#1877F2] p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-white w-full h-full"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </div>
+          <div class="ml-4 text-left font-sans">
+            <span class="block text-sm font-bold text-textMain leading-snug">Facebook</span>
+            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">https://facebook.com/emptypocketproductionhouse</span>
+          </div>
+        </div>
+        <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Email Card -->
+      <a 
+        href="mailto:emptypocketproductionhouse@gmail.com" 
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer"
+      >
+        <div class="flex items-center">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-b from-[#5AC8FA] to-[#007AFF] p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </div>
+          <div class="ml-4 text-left font-sans">
+            <span class="block text-sm font-bold text-textMain leading-snug">Email</span>
+            <span class="block text-[10px] text-textSub font-light truncate max-w-[170px] mt-0.5">emptypocketproductionhouse@gmail.com</span>
+          </div>
+        </div>
+        <svg class="w-4.5 h-4.5 text-textSub group-hover:text-textMain transition-colors transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
 
     </div>
+
+    <!-- Small footer credits text -->
+    <div class="text-center font-sans mt-auto pt-4 pb-8 border-t border-borderGray text-[9px] text-textSub bg-transparent">
+      Designed with ❤️ by Empty Pocket Production House
+    </div>
+
   </div>
 
   <script>
-    // Theme selector init, default to light mode to match screenshot layout
+    // Theme selector initial setup (default to light mode to match the screenshot)
     const savedTheme = localStorage.getItem('theme') || 'light'
     if (savedTheme === 'dark') {
       document.body.classList.add('theme-dark')
@@ -456,29 +397,14 @@
       }
     }
 
-    // Clock updater for simulated device status bar
-    function updateClock() {
-      const now = new Date()
-      let hours = now.getHours()
-      let minutes = now.getMinutes()
-      hours = hours < 10 ? '0' + hours : hours
-      minutes = minutes < 10 ? '0' + minutes : minutes
-      const clockElement = document.getElementById('live-time')
-      if (clockElement) {
-        clockElement.textContent = hours + ':' + minutes
-      }
-    }
-    setInterval(updateClock, 1000)
-    updateClock()
-
-    // Dynamic vCard (.vcf) compiler and download trigger for Arun Craig
+    // Dynamic VCF compiler and download for Arun Craig
     function downloadVCF() {
       const vcard = [
         'BEGIN:VCARD',
         'VERSION:3.0',
         'FN:Arun Craig',
         'ORG:EMPTYPOCKETSPRODUCTION',
-        'TITLE:Advertisement & Branding Agency',
+        'TITLE:Creative Director & Visual Strategy Lead',
         'TEL;TYPE=CELL,VOICE:+918754667546',
         'EMAIL;TYPE=PREF,INTERNET:emptypocketproductionhouse@gmail.com',
         'ADR;TYPE=WORK:;;23/83, Ram Nagar 5th street, SS Colony, Bypass Road;Madurai;Tamil Nadu;625016;India',
@@ -499,7 +425,7 @@
       document.body.removeChild(link)
       URL.revokeObjectURL(url)
 
-      // Explode celebrate confetti
+      // Explode confetti on save success
       if (typeof confetti === 'function') {
         confetti({
           particleCount: 120,
