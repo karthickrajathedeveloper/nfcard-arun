@@ -300,14 +300,15 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
           </button>
 
-          <!-- Dot indicators overlay (all w-2 circles) -->
-          <div class="absolute bottom-4 inset-x-0 flex justify-center gap-2 z-20">
-            <button onclick="goToSlide(0)" class="slide-dot h-2 w-2 bg-brandYellow rounded-full transition-all duration-300" aria-label="Slide 1"></button>
-            <button onclick="goToSlide(1)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 2"></button>
-            <button onclick="goToSlide(2)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 3"></button>
-            <button onclick="goToSlide(3)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 4"></button>
-            <button onclick="goToSlide(4)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 5"></button>
-          </div>
+        </div>
+
+        <!-- Dot indicators bar (Moved below the slide images to avoid overlapping the graphics) -->
+        <div class="py-3.5 flex justify-center gap-2.5 bg-transparent border-t border-borderGray/40">
+          <button onclick="goToSlide(0)" class="slide-dot h-2 w-2 bg-brandYellow rounded-full transition-all duration-300" aria-label="Slide 1"></button>
+          <button onclick="goToSlide(1)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 2"></button>
+          <button onclick="goToSlide(2)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 3"></button>
+          <button onclick="goToSlide(3)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 4"></button>
+          <button onclick="goToSlide(4)" class="slide-dot h-2 w-2 bg-white/40 rounded-full transition-all duration-300" aria-label="Slide 5"></button>
         </div>
       </div>
     </div>
