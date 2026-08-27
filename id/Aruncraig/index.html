@@ -203,7 +203,7 @@
   <!-- Video Preloader / Splash Screen -->
   <div id="video-preloader" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out cursor-pointer" onclick="document.getElementById('video-preloader').style.display='none'; document.getElementById('main-body').classList.remove('overflow-hidden');">
     <video id="intro-video" class="w-full h-full object-contain" muted playsinline autoplay>
-      <source src="asset/NFC Logo 1 Final.mp4" type="video/mp4">
+      <source src="/id/Aruncraig/asset/NFC Logo 1 Final.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -376,7 +376,7 @@
       <!-- Avatar Logo (Enlarged and fixed) -->
       <div
         class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-white p-0 flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-xl"
-        onclick="openSingleImageLightbox('asset/logo.png')">
+        onclick="openSingleImageLightbox('/id/Aruncraig/asset/logo.png')">
         <img src="/id/Aruncraig/asset/logo.png" alt="Empty Pockets Logo"
           class="w-full h-full object-contain scale-[1.6]">
       </div>
@@ -425,23 +425,23 @@
           <div id="slides-container" class="flex w-full h-full transition-transform duration-700 ease-in-out"
             style="transform: translateX(0%);">
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="asset/product2.jpg" alt="Branding" class="w-full h-full object-contain cursor-pointer"
+              <img src="/id/Aruncraig/asset/product2.jpg" alt="Branding" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(0)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="asset/product1.jpg" alt="Inshop Branding" class="w-full h-full object-contain cursor-pointer"
+              <img src="/id/Aruncraig/asset/product1.jpg" alt="Inshop Branding" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(1)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="asset/product3.jpg" alt="Video Production" class="w-full h-full object-contain cursor-pointer"
+              <img src="/id/Aruncraig/asset/product3.jpg" alt="Video Production" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(2)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="asset/product4.jpg" alt="Creatives" class="w-full h-full object-contain cursor-pointer"
+              <img src="/id/Aruncraig/asset/product4.jpg" alt="Creatives" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(3)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="asset/product5.jpg" alt="Digital Marketing" class="w-full h-full object-contain cursor-pointer"
+              <img src="/id/Aruncraig/asset/product5.jpg" alt="Digital Marketing" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(4)">
             </div>
           </div>
@@ -762,11 +762,11 @@
 
     // Lightbox Modal Logic
     const lightboxImages = [
-      'asset/product2.jpg',
-      'asset/product1.jpg',
-      'asset/product3.jpg',
-      'asset/product4.jpg',
-      'asset/product5.jpg'
+      '/id/Aruncraig/asset/product2.jpg',
+      '/id/Aruncraig/asset/product1.jpg',
+      '/id/Aruncraig/asset/product3.jpg',
+      '/id/Aruncraig/asset/product4.jpg',
+      '/id/Aruncraig/asset/product5.jpg'
     ];
     let activeLightboxIndex = 0;
 
