@@ -197,7 +197,15 @@
 </head>
 
 <body
-  class="min-h-screen text-textMain flex justify-center items-start relative selection:bg-brandYellow selection:text-black">
+  class="min-h-screen text-textMain flex justify-center items-start relative selection:bg-brandYellow selection:text-black overflow-hidden"
+  id="main-body">
+
+  <!-- Video Preloader / Splash Screen -->
+  <div id="video-preloader" class="fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ease-in-out cursor-pointer" onclick="document.getElementById('video-preloader').style.display='none'; document.getElementById('main-body').classList.remove('overflow-hidden');">
+    <video id="intro-video" class="w-full h-full object-contain" muted playsinline autoplay>
+      <source src="asset/NFC Logo 1 Final.mp4" type="video/mp4">
+    </video>
+  </div>
 
   <!-- Ambient Backdrop Glows (Visible on all viewports) -->
   <div
@@ -233,7 +241,7 @@
           class="p-2.5 bg-black/40 border border-white/10 hover:border-brandYellow text-white rounded-xl shadow-lg backdrop-blur-md transition-all duration-300 active:scale-90 flex items-center justify-center"
           aria-label="Toggle Theme">
           <!-- Sun Icon (Active in dark theme) -->
-          <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
+          <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden lucide lucide-sun">
             <circle cx="12" cy="12" r="4" />
             <path d="M12 2v2" />
@@ -246,7 +254,7 @@
             <path d="m19.07 4.93-1.41 1.41" />
           </svg>
           <!-- Moon Icon (Active in light theme) -->
-          <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+          <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-moon">
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
@@ -367,8 +375,10 @@
 
       <!-- Avatar Logo (Enlarged and fixed) -->
       <div
-        class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-white p-0 flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300">
-        <img src="/id/Aruncraig/asset/logo.png" alt="Empty Pockets Logo" class="w-full h-full object-contain scale-[1.6]">
+        class="absolute -top-14 w-28 h-28 rounded-full border-[6px] border-darkBg bg-white p-0 flex items-center justify-center shadow-lg overflow-hidden transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-xl"
+        onclick="openSingleImageLightbox('asset/logo.png')">
+        <img src="/id/Aruncraig/asset/logo.png" alt="Empty Pockets Logo"
+          class="w-full h-full object-contain scale-[1.6]">
       </div>
 
       <!-- Spacer -->
@@ -415,23 +425,23 @@
           <div id="slides-container" class="flex w-full h-full transition-transform duration-700 ease-in-out"
             style="transform: translateX(0%);">
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="/id/Aruncraig/asset/product2.jpg" alt="Branding" class="w-full h-full object-contain cursor-pointer"
+              <img src="asset/product2.jpg" alt="Branding" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(0)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="/id/Aruncraig/asset/product1.jpg" alt="Inshop Branding" class="w-full h-full object-contain cursor-pointer"
+              <img src="asset/product1.jpg" alt="Inshop Branding" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(1)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="/id/Aruncraig/asset/product3.jpg" alt="Video Production" class="w-full h-full object-contain cursor-pointer"
+              <img src="asset/product3.jpg" alt="Video Production" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(2)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="/id/Aruncraig/asset/product4.jpg" alt="Creatives" class="w-full h-full object-contain cursor-pointer"
+              <img src="asset/product4.jpg" alt="Creatives" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(3)">
             </div>
             <div class="w-full h-full shrink-0 bg-[#111112] flex items-center justify-center">
-              <img src="/id/Aruncraig/asset/product5.jpg" alt="Digital Marketing" class="w-full h-full object-contain cursor-pointer"
+              <img src="asset/product5.jpg" alt="Digital Marketing" class="w-full h-full object-contain cursor-pointer"
                 onclick="openLightbox(4)">
             </div>
           </div>
@@ -478,46 +488,6 @@
     <!-- ================= 3. SOCIAL CONTACT CARDS ================= -->
     <div class="space-y-4 px-4 pb-12">
 
-      <!-- Instagram Card -->
-      <a href="https://www.instagram.com/emptypocketproductionhouse/" target="_blank"
-        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer hover:bg-[var(--hover-bg)] active:bg-[var(--hover-active-bg)] hover:border-[var(--hover-border)] active:border-[var(--hover-active-border)]">
-        <div class="flex items-center">
-          <div
-            class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-3.5 flex items-center justify-center shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full">
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
-          </div>
-          <div class="ml-4 text-left font-sans flex flex-col justify-center">
-            <span class="block text-[15px] font-bold text-textMain leading-none">Instagram</span>
-            <span class="block text-xs text-textSub font-normal mt-1.5">EMPTY POCKET PRODUCTION HOUSE</span>
-          </div>
-        </div>
-
-      </a>
-
-      <!-- Youtube Card -->
-      <a href="http://youtube.com/@EmptyPocketsProduction" target="_blank"
-        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer hover:bg-[var(--hover-bg)] active:bg-[var(--hover-active-bg)] hover:border-[var(--hover-border)] active:border-[var(--hover-active-border)]">
-        <div class="flex items-center">
-          <div class="w-14 h-14 rounded-2xl bg-[#FF0000] p-3.5 flex items-center justify-center shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-              class="text-white w-full h-full">
-              <path
-                d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.002 3.002 0 0 0 .502 6.163C0 8.07 0 12 0 12s0 3.93.502 5.837a3.003 3.003 0 0 0 2.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 0 0 2.11-2.108C24 15.93 24 12 24 12s0-3.93-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-            </svg>
-          </div>
-          <div class="ml-4 text-left font-sans flex flex-col justify-center">
-            <span class="block text-[15px] font-bold text-textMain leading-none">Youtube</span>
-            <span class="block text-xs text-textSub font-normal mt-1.5">EMPTY POCKET PRODUCTION HOUSE</span>
-          </div>
-        </div>
-
-      </a>
-
       <!-- Phone Card -->
       <a href="tel:+918754667546"
         class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer hover:bg-[var(--hover-bg)] active:bg-[var(--hover-active-bg)] hover:border-[var(--hover-border)] active:border-[var(--hover-active-border)]">
@@ -552,6 +522,27 @@
           <div class="ml-4 text-left font-sans">
             <span class="block text-[15px] font-bold text-textMain leading-none">Whatsapp</span>
             <span class="block text-xs text-textSub font-normal mt-1.5">918754667546</span>
+          </div>
+        </div>
+
+      </a>
+
+      <!-- Instagram Card -->
+      <a href="https://www.instagram.com/emptypocketproductionhouse/" target="_blank"
+        class="glass-card p-4 rounded-3xl flex items-center justify-between group cursor-pointer hover:bg-[var(--hover-bg)] active:bg-[var(--hover-active-bg)] hover:border-[var(--hover-border)] active:border-[var(--hover-active-border)]">
+        <div class="flex items-center">
+          <div
+            class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-3.5 flex items-center justify-center shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-white w-full h-full">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+            </svg>
+          </div>
+          <div class="ml-4 text-left font-sans flex flex-col justify-center">
+            <span class="block text-[15px] font-bold text-textMain leading-none">Instagram</span>
+            <span class="block text-xs text-textSub font-normal mt-1.5">EMPTY POCKET PRODUCTION HOUSE</span>
           </div>
         </div>
 
@@ -608,6 +599,49 @@
   </div>
 
   <script>
+    // Video Preloader Logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const preloader = document.getElementById('video-preloader');
+      const video = document.getElementById('intro-video');
+      const body = document.getElementById('main-body');
+
+      let preloaderHidden = false;
+
+      function hidePreloader() {
+        if (preloaderHidden) return;
+        preloaderHidden = true;
+
+        preloader.classList.add('opacity-0');
+        // Restore scrolling
+        body.classList.remove('overflow-hidden');
+
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 1000); // Wait for fade transition
+      }
+
+      if (video) {
+        // Fallback: If video gets stuck or user wants to skip
+        video.addEventListener('ended', hidePreloader);
+        video.addEventListener('error', hidePreloader);
+        preloader.addEventListener('click', hidePreloader);
+        
+        // Attempt to play explicitly
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.warn("Autoplay blocked:", error);
+            hidePreloader(); // hide if blocked
+          });
+        }
+        
+        // Also hide if it takes too long (e.g. 7 seconds fallback)
+        setTimeout(hidePreloader, 7000);
+      } else {
+        hidePreloader();
+      }
+    });
+
     // Theme selector initial setup (default to light mode to match the screenshot)
     const savedTheme = localStorage.getItem('theme') || 'light'
     if (savedTheme === 'dark') {
@@ -728,11 +762,11 @@
 
     // Lightbox Modal Logic
     const lightboxImages = [
-      '/id/Aruncraig/asset/product2.jpg',
-      '/id/Aruncraig/asset/product1.jpg',
-      '/id/Aruncraig/asset/product3.jpg',
-      '/id/Aruncraig/asset/product4.jpg',
-      '/id/Aruncraig/asset/product5.jpg'
+      'asset/product2.jpg',
+      'asset/product1.jpg',
+      'asset/product3.jpg',
+      'asset/product4.jpg',
+      'asset/product5.jpg'
     ];
     let activeLightboxIndex = 0;
 
@@ -783,7 +817,26 @@
         if (e.key === 'ArrowRight') moveLightboxSlide(1);
         if (e.key === 'ArrowLeft') moveLightboxSlide(-1);
       }
+      const singleModal = document.getElementById('single-lightbox-modal');
+      if (singleModal && !singleModal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeSingleLightbox();
+      }
     });
+
+    // Single image lightbox logic
+    function openSingleImageLightbox(src) {
+      const modal = document.getElementById('single-lightbox-modal');
+      const img = document.getElementById('single-lightbox-image');
+      img.src = src;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSingleLightbox() {
+      const modal = document.getElementById('single-lightbox-modal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
   </script>
 
   <!-- Lightbox Modal -->
@@ -824,6 +877,28 @@
     <div class="max-w-[90%] max-h-[80%] flex items-center justify-center" onclick="closeLightbox()">
       <img id="lightbox-image" src="" alt="Lightbox View"
         class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-all duration-300 transform scale-95 opacity-0"
+        onclick="event.stopPropagation()">
+    </div>
+  </div>
+
+  <!-- Single Image Lightbox Modal -->
+  <div id="single-lightbox-modal"
+    class="fixed inset-0 z-[60] hidden bg-black/95 backdrop-blur-md flex flex-col justify-center items-center select-none"
+    onclick="if(event.target === this) closeSingleLightbox()">
+    <!-- Close button -->
+    <button onclick="closeSingleLightbox()"
+      class="absolute top-6 right-6 text-white/70 hover:text-white hover:scale-110 transition-all p-3 z-10"
+      aria-label="Close Lightbox">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor"
+        stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Image Container -->
+    <div class="max-w-[90%] max-h-[80%] flex items-center justify-center" onclick="closeSingleLightbox()">
+      <img id="single-lightbox-image" src="" alt="View"
+        class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-all duration-300"
         onclick="event.stopPropagation()">
     </div>
   </div>
